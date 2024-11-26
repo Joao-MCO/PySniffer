@@ -4,6 +4,7 @@ import sys
 
 import click
 import scripts.get_all_paths as paths
+from scripts.plot_data import plot_info_data
 import scripts.plot_top10 as plot
 from logs import log
 from scripts import list_libs
@@ -42,7 +43,7 @@ def analyzing_git_repos(dir = './downloaded_repos/all_repos'):
         os.system(f'python pipreqs/pipreqs.py {path} --force')
 
     #Reading requirements file, generating list and save in a Json
-    list_libs.list_save_projects_libs(dir, projects)
+    list_libs.list_save_projects_libs(dir, projects, projects_dict)
 
     print('Returns were generated in returns/all_projects')
 
@@ -79,6 +80,17 @@ def analyzing_my_project(link:str):
     #Analyze if the project libraries are among the most used
     print("\n2) ANALYZING MY PROJECT")
     analyzing_libraries()
+
+@pysniffer.command("plot_results")
+def plot_results():
+    """Plot projects statistics"""    
+
+    print("##################################################################")
+    print("              PySniffer - Generate Projects Statistics            ")
+    print("##################################################################")
+
+    # Ploting the data from info_data.json
+    plot_info_data()
 
 
 if __name__ == "__main__":
